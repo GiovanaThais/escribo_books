@@ -22,7 +22,7 @@ class BookRepository implements IBookRepository {
 
       final body = jsonDecode(response.body);
 
-      body[''].map((item) {
+      body.map((item) {
         final BookModel book = BookModel.fromMap(item);
         books.add(book);
       }).toList();
