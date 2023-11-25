@@ -1,4 +1,4 @@
-import 'package:escribo_books/pages/page2.dart';
+import 'package:escribo_books/pages/favorites.dart';
 import 'package:escribo_books/pages/favorites_page.dart';
 import 'package:flutter/material.dart';
 

@@ -1,12 +1,9 @@
+import 'package:escribo_books/http/http_client.dart';
 import 'package:escribo_books/model/book_model.dart';
 import 'package:escribo_books/pages/reader_page.dart';
-import 'package:flutter/material.dart';
-import 'package:escribo_books/http/http_client.dart';
-import 'package:escribo_books/pages/favorites_page.dart';
 import 'package:escribo_books/repositories/book_repository.dart';
-import 'package:escribo_books/repositories/custom_drawer_widget.dart';
 import 'package:escribo_books/stores/book_store.dart';
-import 'package:vocsy_epub_viewer/epub_viewer.dart';
+import 'package:flutter/material.dart';
 
 class Page1 extends StatefulWidget {
   const Page1({super.key, required this.title});
@@ -18,51 +15,11 @@ class Page1 extends StatefulWidget {
 }
 
 class _Page1State extends State<Page1> {
+  final IHttpClient http = HttpClient();
   final BookStore store = BookStore(
       repository: BookRepository(
     client: HttpClient(),
   ));
-
-  Future<void> _downloadAndOpenBook(String downloadUrl) async {
-    try {
-      String filePath = await _downloadFile(downloadUrl);
-      _openEpubReader(filePath);
-    } catch (e) {
-      // Lógica para lidar com erros durante o download
-      print("Erro durante o download: $e");
-    }
-  }
-
-  Future<String> _downloadFile(String downloadUrl) async {
-    // Lógica para download do arquivo
-
-    //url ficticia
-    return downloadUrl;
-  }
-
-  void _openEpubReader(String filePath) {
-    VocsyEpub.setConfig(
-      themeColor: Theme.of(context).primaryColor,
-      identifier: "book_identifier",
-      scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
-      allowSharing: true,
-      enableTts: true,
-      nightMode: false,
-    );
-
-    VocsyEpub.open(
-      filePath,
-      lastLocation: EpubLocator.fromJson({
-        "bookId": "book_identifier",
-        "href": "/OEBPS/ch06.xhtml",
-        "created": 1539934158390,
-        "locations": {"cfi": "epubcfi(/0!/4/4[simple_book]/2/2/6)"},
-      }),
-    );
-    VocsyEpub.locatorStream.listen((locator) {
-      print('LOCATOR: $BookRepository');
-    });
-  }
 
   bool isBookmarked = false;
 
@@ -140,7 +97,15 @@ class _Page1State extends State<Page1> {
                           child: InkWell(
                             hoverColor: Colors.grey,
                             onTap: () async {
-                              await _downloadAndOpenBook(item.download_url);
+                              // await _downloadAndOpenBook(item.download_url);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ReaderPage(
+                                            bookName: item.title,
+                                            fiileUrl: item.download_url,
+                                            http: http,
+                                          )));
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(16),

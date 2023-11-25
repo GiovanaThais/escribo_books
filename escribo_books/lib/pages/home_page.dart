@@ -1,13 +1,12 @@
 import 'package:escribo_books/http/http_client.dart';
 import 'package:escribo_books/pages/favorites_page.dart';
 import 'package:escribo_books/repositories/book_repository.dart';
-import 'package:escribo_books/repositories/custom_drawer_widget.dart';
+import 'package:escribo_books/widgets/custom_drawer_widget.dart';
 import 'package:escribo_books/stores/book_store.dart';
 import 'package:flutter/material.dart';
 import 'package:vocsy_epub_viewer/epub_viewer.dart';
 
 import 'page1.dart';
-//import 'page2.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
