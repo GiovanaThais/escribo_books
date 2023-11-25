@@ -1,5 +1,5 @@
 import 'package:escribo_books/http/http_client.dart';
-import 'package:escribo_books/pages/reader_page.dart';
+import 'package:escribo_books/pages/favorites_page.dart';
 import 'package:escribo_books/repositories/book_repository.dart';
 import 'package:escribo_books/repositories/custom_drawer_widget.dart';
 import 'package:escribo_books/stores/book_store.dart';
@@ -166,31 +166,35 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
                         Positioned(
-                            right: 0,
-                            top: 0,
-                            child: IconButton(
-                                focusColor: Colors.white,
-                                padding: EdgeInsets.all(-10),
-                                icon: const Icon(
-                                  Icons.bookmark,
-                                  size: 40,
-                                ),
-                                onPressed: () {
-                                  isBookmarked = !isBookmarked;
-                                })
-                            //
-                            ),
+                          right: -7,
+                          top: -13,
+                          child: IconButton(
+                              focusColor: Colors.white,
+                              onPressed: () {
+                                setState(() {
+                                  isBookmarked = true;
+                                });
+                              },
+                              icon: isBookmarked
+                                  ? const Icon(
+                                      Icons.bookmark,
+                                      color: Colors.red,
+                                      size: 40,
+                                    )
+                                  : const Icon(
+                                      Icons.bookmark_outline,
+                                      size: 40,
+                                    )
+
+                              //
+                              ),
+                        ),
                       ],
                     ),
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       title: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ReaderPage()));
-                        },
+                        onTap: () {},
                         child: Text(
                           item.title,
                           style: const TextStyle(

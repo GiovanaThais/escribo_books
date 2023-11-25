@@ -1,3 +1,5 @@
+import 'package:escribo_books/pages/page2.dart';
+import 'package:escribo_books/pages/favorites_page.dart';
 import 'package:flutter/material.dart';
 
 class CustomDrawerWidget extends StatelessWidget {
@@ -59,7 +61,14 @@ class CustomDrawerWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const FavoritesPage()),
+                );
+              },
             ),
             const Divider(),
             const SizedBox(
