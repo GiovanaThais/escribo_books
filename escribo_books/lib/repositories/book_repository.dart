@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:escribo_books/http/exceptions.dart';
 import 'package:escribo_books/http/http_client.dart';
@@ -15,7 +16,11 @@ class BookRepository implements IBookRepository {
 
   @override
   Future<List<BookModel>> getBooks() async {
-    final response = await client.get(url: 'https://escribo.com/books.json');
+    final response = await client
+        .get(url: 'https://escribo.com/books.json')
+        .onError((error, stackTrace) {
+      log(error.toString());
+    });
 
     if (response.statusCode == 200) {
       final List<BookModel> books = [];
