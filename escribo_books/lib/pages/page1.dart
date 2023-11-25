@@ -1,4 +1,5 @@
 import 'package:escribo_books/model/book_model.dart';
+import 'package:escribo_books/pages/reader_page.dart';
 import 'package:flutter/material.dart';
 import 'package:escribo_books/http/http_client.dart';
 import 'package:escribo_books/pages/favorites_page.dart';
@@ -21,6 +22,7 @@ class _Page1State extends State<Page1> {
       repository: BookRepository(
     client: HttpClient(),
   ));
+
   Future<void> _downloadAndOpenBook(String downloadUrl) async {
     try {
       String filePath = await _downloadFile(downloadUrl);
@@ -31,11 +33,11 @@ class _Page1State extends State<Page1> {
     }
   }
 
-  Future<String> _downloadFile(String url) async {
+  Future<String> _downloadFile(String downloadUrl) async {
     // Lógica para download do arquivo
 
     //url ficticia
-    return "/path/to/downloaded/book.epub";
+    return downloadUrl;
   }
 
   void _openEpubReader(String filePath) {
