@@ -12,6 +12,10 @@ class BookStore {
   final ValueNotifier<List<BookModel>> state =
       ValueNotifier<List<BookModel>>([]);
 
+  //variavel reativa para o favoritos
+  final ValueNotifier<List<BookModel>> favoriteList =
+      ValueNotifier<List<BookModel>>([]);
+
   //variavel reativa para o erro
   final ValueNotifier<String> erro = ValueNotifier<String>('');
 
@@ -30,5 +34,14 @@ class BookStore {
     }
 
     isLoading.value = false;
+  }
+
+  void addAndRemoveFavorite(BookModel book) {
+    if (favoriteList.value.contains(book)) {
+      favoriteList.value.remove(book);
+    } else {
+      favoriteList.value.add(book);
+    }
+    favoriteList.notifyListeners();
   }
 }

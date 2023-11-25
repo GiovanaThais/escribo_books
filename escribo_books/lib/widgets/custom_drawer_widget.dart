@@ -1,5 +1,3 @@
-import 'package:escribo_books/pages/favorites.dart';
-import 'package:escribo_books/pages/favorites_page.dart';
 import 'package:flutter/material.dart';
 
 class CustomDrawerWidget extends StatelessWidget {
@@ -38,38 +36,38 @@ class CustomDrawerWidget extends StatelessWidget {
               },
               child: UserAccountsDrawerHeader(
                   currentAccountPicture: CircleAvatar(
-                    backgroundColor: Color.fromARGB(255, 249, 255, 252),
+                    backgroundColor: const Color.fromARGB(255, 249, 255, 252),
                     child: Image.asset(
                       'assets/icon/logo.png',
                       width: 60,
                     ),
                   ),
-                  accountName: Text("User"),
-                  accountEmail: Text("email@email.com")),
+                  accountName: const Text("User"),
+                  accountEmail: const Text("email@email.com")),
             ),
-            InkWell(
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                width: double.infinity,
-                child: const Row(
-                  children: [
-                    Icon(Icons.bookmark),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text("Favoritos"),
-                  ],
-                ),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const FavoritesPage()),
-                );
-              },
-            ),
+            // InkWell(
+            //   child: Container(
+            //     padding: const EdgeInsets.symmetric(vertical: 5),
+            //     width: double.infinity,
+            //     child: const Row(
+            //       children: [
+            //         Icon(Icons.bookmark),
+            //         SizedBox(
+            //           width: 5,
+            //         ),
+            //         Text("Favoritos"),
+            //       ],
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //           builder: (context) => const FavoritesPage()),
+            //     );
+            //   },
+            // ),
             const Divider(),
             const SizedBox(
               height: 10,

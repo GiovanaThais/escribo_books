@@ -1,29 +1,27 @@
-import 'package:escribo_books/http/http_client.dart';
-import 'package:escribo_books/model/book_model.dart';
-import 'package:escribo_books/pages/reader_page.dart';
-import 'package:escribo_books/repositories/book_repository.dart';
 import 'package:escribo_books/stores/book_store.dart';
 import 'package:flutter/material.dart';
 
 class Page1 extends StatefulWidget {
-  const Page1({super.key, required this.title});
+  const Page1(
+      {super.key,
+      required this.title,
+      required this.store,
+      required this.onEbookTap});
+  final BookStore store;
 
   final String title;
+
+  final void Function({required String fiileUrl, required String bookName})
+      onEbookTap;
 
   @override
   State<Page1> createState() => _Page1State();
 }
 
 class _Page1State extends State<Page1> {
-  final IHttpClient http = HttpClient();
-  final BookStore store = BookStore(
-      repository: BookRepository(
-    client: HttpClient(),
-  ));
+  BookStore get store => widget.store;
 
-  bool isBookmarked = false;
-
-  final List<BookModel> _favoritesList = [];
+  // final List<BookModel> _favoritesList = [];
 
   @override
   void initState() {
@@ -39,6 +37,7 @@ class _Page1State extends State<Page1> {
           store.isLoading,
           store.erro,
           store.state,
+          store.favoriteList,
         ]),
         builder: (context, child) {
           if (store.isLoading.value) {
@@ -80,7 +79,7 @@ class _Page1State extends State<Page1> {
               itemCount: store.state.value.length,
               itemBuilder: (_, index) {
                 final isFavorite =
-                    _favoritesList.contains(store.state.value[index]);
+                    store.favoriteList.value.contains(store.state.value[index]);
                 final item = store.state.value[index];
                 return Column(
                   children: [
@@ -96,17 +95,9 @@ class _Page1State extends State<Page1> {
                           ),
                           child: InkWell(
                             hoverColor: Colors.grey,
-                            onTap: () async {
-                              // await _downloadAndOpenBook(item.download_url);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ReaderPage(
-                                            bookName: item.title,
-                                            fiileUrl: item.download_url,
-                                            http: http,
-                                          )));
-                            },
+                            onTap: () => widget.onEbookTap(
+                                bookName: item.title,
+                                fiileUrl: item.download_url),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(16),
                               child: Image.network(
@@ -122,15 +113,7 @@ class _Page1State extends State<Page1> {
                           child: IconButton(
                             focusColor: Colors.white,
                             onPressed: () {
-                              setState(() {
-                                //  isBookmarked = true;
-                                if (isFavorite) {
-                                  _favoritesList
-                                      .remove(store.state.value[index]);
-                                } else {
-                                  _favoritesList.add(store.state.value[index]);
-                                }
-                              });
+                              store.addAndRemoveFavorite(item);
                             },
                             icon: isFavorite
                                 ? const Icon(
